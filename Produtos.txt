@@ -1,0 +1,10 @@
+1;R$92,00;Coca-Cola
+2;R$18,00;Batata Lay’s
+3;R$47,00;PlayStation
+4;R$62,00;Toyota Corolla
+5;R$48,00;iPad
+6;R$82,00;iPhone
+7;R$71,00;Cubo mágico
+8;R$38,00;Limpador de janelas
+9;R$97,00;Macacão feminino
+10;R$50,00;Calotas para Gol G4

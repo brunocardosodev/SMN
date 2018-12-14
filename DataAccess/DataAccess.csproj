@@ -41,14 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Produto.cs" />
     <Compile Include="ProdutoDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WebAPI\WebAPI.csproj">
-      <Project>{f77313af-1cbf-4ab4-b569-e81667aae729}</Project>
-      <Name>WebAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

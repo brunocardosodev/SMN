@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="ProdutoBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,10 +49,6 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{2771eb26-5974-45f0-a544-682d17ef7d5b}</Project>
       <Name>DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WebAPI\WebAPI.csproj">
-      <Project>{f77313af-1cbf-4ab4-b569-e81667aae729}</Project>
-      <Name>WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

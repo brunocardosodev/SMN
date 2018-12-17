@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class Produto
+    public class ProdutoModel
     {
         public int idProduto { get; set; }
         public string vrProduto { get; set; }
         public string nmProduto { get; set; }
 
-        public Produto(int idProduto, string vrProduto, string nmProduto)
+        public ProdutoModel(int idProduto, string vrProduto, string nmProduto)
         {
             this.idProduto = idProduto;
             this.vrProduto = vrProduto;

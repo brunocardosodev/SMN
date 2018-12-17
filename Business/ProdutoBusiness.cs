@@ -8,14 +8,14 @@ namespace Business
 {
     public class ProdutoBusiness
     {
-        public Produto Get(int idProduto)
+        public ProdutoModel Get(int idProduto)
         {
             try
             {
                 var produtos = new ProdutoDataAccess().GetList();
                 var produto = produtos.SingleOrDefault(x => x.idProduto == idProduto);
 
-                var result = new Produto(produto.idProduto, produto.vrProduto, produto.nmProduto);
+                var result = new ProdutoModel(produto.idProduto, produto.vrProduto, produto.nmProduto);
 
                 return result;
             }
@@ -25,15 +25,15 @@ namespace Business
             }
         }
 
-        public List<Produto> GetList()
+        public List<ProdutoModel> GetList()
         {
             try
             {
                 var produtosEntities = new ProdutoDataAccess().GetList();
-                var result = new List<Produto>();
+                var result = new List<ProdutoModel>();
                 foreach (var item in produtosEntities)
                 {
-                    var produto = new Produto(item.idProduto, item.vrProduto, item.nmProduto);
+                    var produto = new ProdutoModel(item.idProduto, item.vrProduto, item.nmProduto);
                     result.Add(produto);
                 }
 

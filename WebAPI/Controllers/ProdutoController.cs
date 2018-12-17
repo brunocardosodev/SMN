@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
     public class ProdutoController : ApiController
     {
         [HttpGet]
-        public List<Produto> Get()
+        public List<ProdutoModel> Get()
         {
             var produtos = new ProdutoBusiness().GetList();
 

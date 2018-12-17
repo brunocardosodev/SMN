@@ -10,7 +10,7 @@ namespace DataAccess
         private static List<Produto> produtos = new List<Produto>();
         public List<Produto> GetList()
         {
-            var path = "D:SMN/produtos.txt";
+            var path = "D:/SMN/produtos.txt";
 
             if (File.Exists(path))
             {
@@ -18,15 +18,17 @@ namespace DataAccess
                 {
                     Stream file = File.Open(path, FileMode.Open);
                     StreamReader reader = new StreamReader(file);
-                    while (reader.ReadLine() != null)
-                    {
-                        var row = reader.ReadLine();
+                    var row = reader.ReadLine();
 
+                    while (row != null)
+                    {
                         if (row != null)
                         {
                             var text = row.Split(';');
                             produtos.Add(new Produto(Convert.ToInt32(text[0]), text[1], text[2]));
                         }
+
+                        row = reader.ReadLine();
                     }
 
                     reader.Close();

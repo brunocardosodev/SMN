@@ -45,5 +45,9 @@
     <Compile Include="ProdutoDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Repository\Produtos.txt" />
+    <Content Include="Repository\Vendas.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

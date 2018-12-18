@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Produto.cs" />
+    <Compile Include="Entities\Venda.cs" />
     <Compile Include="ProdutoDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VendaDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Repository\Produtos.txt" />

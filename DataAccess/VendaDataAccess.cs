@@ -5,14 +5,14 @@ using System.IO;
 
 namespace DataAccess
 {
-    public class ProdutoDataAccess
+    public class VendaDataAccess
     {
-        private static List<Produto> produtos = new List<Produto>();
-        public List<Produto> GetList()
+        private static List<Venda> vendas = new List<Venda>();
+        public List<Venda> GetList()
         {
-            var path = "D:/SMN/produtos.txt";
+            var path = "D:/SMN/vendas.txt";
 
-            if (produtos.Count == 0)
+            if (vendas.Count == 0)
             {
                 if (File.Exists(path))
                 {
@@ -21,13 +21,19 @@ namespace DataAccess
                         Stream file = File.Open(path, FileMode.Open);
                         StreamReader reader = new StreamReader(file);
                         var row = reader.ReadLine();
+                        row = reader.ReadLine();
 
                         while (row != null)
                         {
                             if (row != null)
                             {
                                 var text = row.Split(';');
-                                produtos.Add(new Produto(Convert.ToInt32(text[0]), text[1], text[2]));
+                                var cnpj = Convert.ToInt64(text[0]);
+                                var idProduto = Convert.ToInt32(text[2]);
+                                var dtVenda = DateTime.ParseExact(text[1], "yyyy-MM-dd",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+                                vendas.Add(new Venda(cnpj, dtVenda, idProduto));
                             }
 
                             row = reader.ReadLine();
@@ -36,7 +42,7 @@ namespace DataAccess
                         reader.Close();
                         file.Close();
 
-                        return produtos;
+                        return vendas;
                     }
                     catch (Exception e)
                     {
@@ -44,9 +50,8 @@ namespace DataAccess
                     }
                 }
             }
-            
-            return produtos;
+
+            return vendas;
         }
     }
 }
-

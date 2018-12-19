@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Http;
+using WebApi.OutputCache.V2;
 
 namespace WebAPI.Controllers
 {
@@ -11,7 +12,8 @@ namespace WebAPI.Controllers
     public class ProdutoController : ApiController
     {
         [HttpGet]
-        public List<ProdutoModel> Get()
+        [CacheOutput(ServerTimeSpan = 120)]
+        public ProdutoViewModel Get()
         {
             var produtos = new ProdutoBusiness().GetList();
 

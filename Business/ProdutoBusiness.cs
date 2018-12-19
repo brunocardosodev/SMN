@@ -21,27 +21,28 @@ namespace Business
             }
             catch (Exception e)
             {
-                throw new Exception();
+                return new ProdutoModel(e.Message);
             }
         }
 
-        public List<ProdutoModel> GetList()
+        public ProdutoViewModel GetList()
         {
             try
             {
                 var produtosEntities = new ProdutoDataAccess().GetList();
-                var result = new List<ProdutoModel>();
+                var result = new ProdutoViewModel();
+
                 foreach (var item in produtosEntities)
                 {
                     var produto = new ProdutoModel(item.idProduto, item.vrProduto, item.nmProduto);
-                    result.Add(produto);
+                    result.Produtos.Add(produto);
                 }
 
                 return result;
             }
             catch (Exception e)
             {
-                throw new Exception();
+                return new ProdutoViewModel(e.Message);
             }
         }
     }

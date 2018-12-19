@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class VendaModel
+    public class VendaViewModel : BaseModel
+    {
+        public VendaViewModel()
+        {
+            this.Vendas = new List<VendaModel>();
+        }
+        public VendaViewModel(string excessao)
+        {
+            this.deErro = excessao;
+        }
+        public List<VendaModel> Vendas { get; set; }
+    }
+    public class VendaModel : BaseModel
     {
         public long cnpj { get; set; }
         public DateTime dtVenda { get; set; }

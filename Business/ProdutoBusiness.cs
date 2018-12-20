@@ -1,8 +1,7 @@
-﻿using DataAccess;
-using Business.Models;
+﻿using Business.Models;
+using DataAccess;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Business
 {

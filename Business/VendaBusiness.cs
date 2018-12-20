@@ -15,8 +15,12 @@ namespace Business
                 var result = new VendaViewModel();
                 foreach (var item in vendas)
                 {
-                    var venda = new VendaModel(item.cnpj, item.dtVenda, item.idProduto, new ProdutoBusiness().Get(item.idProduto).nmProduto);
-                    result.Vendas.Add(venda);
+                    var produto = new ProdutoBusiness().Get(item.idProduto);
+                    if (produto != null)
+                    {
+                        var venda = new VendaModel(item.cnpj, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
+                        result.Vendas.Add(venda);
+                    }
                 }
 
                 return result;
@@ -35,11 +39,11 @@ namespace Business
                 var filter = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
                 var ranking = from venda in filter
                               group venda by venda.idProduto into vendasGroup
-                                    select new
-                                    {
-                                        idProduto = vendasGroup.Key,
-                                        qtdeVendas = vendasGroup.Count(),
-                                    };
+                              select new
+                              {
+                                  idProduto = vendasGroup.Key,
+                                  qtdeVendas = vendasGroup.Count(),
+                              };
 
                 ranking = ranking.OrderByDescending(x => x.qtdeVendas);
 
@@ -50,7 +54,7 @@ namespace Business
                     var produto = new ProdutoBusiness().Get(item.idProduto);
                     if (produto != null)
                     {
-                        var vrProduto = produto.vrProduto.Split('$')[1].Replace(',', '.');
+                        var vrProduto = produto.vrProduto.Split('$')[1];
 
                         var itemRank = new RankingModel(produto.nmProduto, item.qtdeVendas, decimal.Parse(vrProduto) * item.qtdeVendas);
                         rankingView.Ranking.Add(itemRank);
@@ -64,5 +68,32 @@ namespace Business
                 return new RankingViewModel(e.Message);
             }
         }
+
+        public VendaViewModel GetListProdutosByPeriodo(DateTime dtInicial, DateTime dtFinal)
+        {
+            try
+            {
+                var vendas = new DataAccess.VendaDataAccess().GetList();
+                var filter = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
+
+                var result = new VendaViewModel();
+                foreach (var item in filter)
+                {
+                    var produto = new ProdutoBusiness().Get(item.idProduto);
+                    if (produto != null)
+                    {
+                        var venda = new VendaModel(item.cnpj, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
+                        result.Vendas.Add(venda);
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new VendaViewModel(e.Message);
+            }
+        }
+
     }
 }

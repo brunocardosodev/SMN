@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Business.Models
 {
@@ -9,13 +8,15 @@ namespace Business.Models
         public DateTime dtVenda { get; set; }
         public int idProduto { get; set; }
         public string nmProduto { get; set; }
+        public string vrProduto { get; set; }
 
-        public VendaModel(long cnpj, DateTime dtVenda, int idProduto, string nmProduto)
+        public VendaModel(long cnpj, DateTime dtVenda, int idProduto, string nmProduto, string vrProduto)
         {
             this.cnpj = cnpj;
             this.dtVenda = dtVenda;
             this.idProduto = idProduto;
             this.nmProduto = nmProduto;
+            this.vrProduto = vrProduto;
         }
     }
 }

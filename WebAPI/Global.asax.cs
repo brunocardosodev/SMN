@@ -20,7 +20,7 @@ namespace WebAPI
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
                 Culture = CultureInfo.GetCultureInfo("pt-BR"),
-                DateFormatString = "dd/MM/yyyy HH:mm:ss",
+                DateFormatString = "dd/MM/yyyy HH:mm:ss"
             };
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Business.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Business
@@ -28,26 +27,41 @@ namespace Business
             }
         }
 
-        public VendaViewModel GetRankingProdutosByPeriodo(DateTime dtInicial, DateTime dtFinal)
+        public RankingViewModel GetRankingProdutosByPeriodo(DateTime dtInicial, DateTime dtFinal)
         {
             try
             {
                 var vendas = new DataAccess.VendaDataAccess().GetList();
-                var result = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
-
-                var rankingResult = from venda in result
-                                    group venda by venda.idProduto into vendasGroup
+                var filter = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
+                var ranking = from venda in filter
+                              group venda by venda.idProduto into vendasGroup
                                     select new
                                     {
                                         idProduto = vendasGroup.Key,
-                                        count = vendasGroup.Count()
+                                        qtdeVendas = vendasGroup.Count(),
                                     };
 
-                return new VendaViewModel();
+                ranking = ranking.OrderByDescending(x => x.qtdeVendas);
+
+                var rankingView = new RankingViewModel();
+
+                foreach (var item in ranking)
+                {
+                    var produto = new ProdutoBusiness().Get(item.idProduto);
+                    if (produto != null)
+                    {
+                        var vrProduto = produto.vrProduto.Split('$')[1].Replace(',', '.');
+
+                        var itemRank = new RankingModel(produto.nmProduto, item.qtdeVendas, decimal.Parse(vrProduto) * item.qtdeVendas);
+                        rankingView.Ranking.Add(itemRank);
+                    }
+                }
+
+                return rankingView;
             }
             catch (Exception e)
             {
-                return new VendaViewModel(e.Message);
+                return new RankingViewModel(e.Message);
             }
         }
     }

@@ -20,14 +20,17 @@ namespace WebAPI.Controllers
             return vendas;
         }
 
+        /// <summary>
+        /// 1. Ranking de produtos mais vendidos por período.
+        /// </summary>
         [HttpGet]
         [Route("GetRankingProdutosByPeriodo")]
-        [CacheOutput(ServerTimeSpan = 120)]
-        public VendaViewModel GetRankingProdutosByPeriodo(DateTime dtInicio, DateTime dtFim)
+        //[CacheOutput(ServerTimeSpan = 120)]
+        public RankingViewModel GetRankingProdutosByPeriodo(DateTime dtInicio, DateTime dtFim)
         {
-            var vendas = new VendaBusiness().GetRankingProdutosByPeriodo(dtInicio, dtFim);
+            var rankingProdutosByPeriodo = new VendaBusiness().GetRankingProdutosByPeriodo(dtInicio, dtFim);
 
-            return vendas;
+            return rankingProdutosByPeriodo;
         }
     }
 }

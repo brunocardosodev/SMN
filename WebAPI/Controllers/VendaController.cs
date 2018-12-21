@@ -44,5 +44,18 @@ namespace WebAPI.Controllers
 
             return produtosByPeriodo;
         }
+
+        /// <summary>
+        /// 3. Ranking de vendas por mês.
+        /// </summary>
+        [HttpGet]
+        [Route("GetRankingVendasByMes")]
+        [CacheOutput(ServerTimeSpan = 120)]
+        public RankingViewModel GetRankingVendasByMes(int? ano)
+        {
+            var vendaMes = new VendaBusiness().GetRankingVendasByMes(ano);
+
+            return vendaMes;
+        }
     }
 }

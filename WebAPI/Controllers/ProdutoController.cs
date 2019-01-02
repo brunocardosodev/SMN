@@ -1,8 +1,5 @@
 ﻿using Business;
 using Business.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Web.Http;
 using WebApi.OutputCache.V2;
 
@@ -13,6 +10,7 @@ namespace WebAPI.Controllers
     {
         [HttpGet]
         [CacheOutput(ServerTimeSpan = 120)]
+        [Route("Get")]
         public ProdutoViewModel Get()
         {
             var produtos = new ProdutoBusiness().GetList();

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication.Models.Tarefa>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tarefas</h2>
+
+<p class="pull-right">
+    @Html.ActionLink("Incluir Tarefa", "Create", "Tarefa", new { @class = "btn btn-success" })
+</p>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nmTarefa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.icConcluido)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nmTarefa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.icConcluido)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.idTarefa }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Excluir", "Delete", new { id = item.idTarefa }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

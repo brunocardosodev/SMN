@@ -31,11 +31,8 @@ namespace Business
                 var produtosEntities = new ProdutoDataAccess().GetList();
                 var result = new ProdutoViewModel();
 
-                foreach (var item in produtosEntities)
-                {
-                    var produto = new ProdutoModel(item.idProduto, item.vrProduto, item.nmProduto);
-                    result.Produtos.Add(produto);
-                }
+                var produtos = produtosEntities.Select(x => new ProdutoModel(x.idProduto, x.vrProduto, x.nmProduto)).ToList();
+                result.Produtos = produtos;
 
                 return result;
             }

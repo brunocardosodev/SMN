@@ -1,7 +1,9 @@
 ﻿using Business.Models;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -19,7 +21,7 @@ namespace Business
                     var produto = new ProdutoBusiness().Get(item.idProduto);
                     if (produto != null)
                     {
-                        var venda = new VendaModel(item.cnpj, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
+                        var venda = new VendaModel(item.nuCNPJ, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
                         result.Vendas.Add(venda);
                     }
                 }
@@ -57,7 +59,7 @@ namespace Business
                     {
                         var vrProduto = produto.vrProduto.Split('$')[1];
 
-                        var itemRank = new RankingModel(produto.nmProduto, item.qtdeVendas, decimal.Parse(vrProduto) * item.qtdeVendas, null);
+                        var itemRank = new RankingModel(produto.nmProduto, item.qtdeVendas, decimal.Parse(vrProduto) * item.qtdeVendas, null, null);
                         rankingView.Ranking.Add(itemRank);
                     }
                 }
@@ -78,12 +80,13 @@ namespace Business
                 var filter = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
 
                 var result = new VendaViewModel();
+
                 foreach (var item in filter)
                 {
                     var produto = new ProdutoBusiness().Get(item.idProduto);
                     if (produto != null)
                     {
-                        var venda = new VendaModel(item.cnpj, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
+                        var venda = new VendaModel(item.nuCNPJ, item.dtVenda, item.idProduto, produto.nmProduto, produto.vrProduto);
                         result.Vendas.Add(venda);
                     }
                 }
@@ -129,8 +132,72 @@ namespace Business
                             vrTotalVendas = vrTotalVendas + decimal.Parse(vrProduto);
                         }
                     }
-                    var itemRank = new RankingModel(null, item.qtdeVendas, vrTotalVendas, DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(item.mes));
+                    var itemRank = new RankingModel(null, item.qtdeVendas, vrTotalVendas, DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(item.mes), null);
                     rankingView.Ranking.Add(itemRank);
+                    vrTotalVendas = 0;
+                }
+
+                return rankingView;
+            }
+            catch (Exception e)
+            {
+                return new RankingViewModel(e.Message);
+            }
+        }
+
+        public async Task<RankingViewModel> GetRankingClientes(int? ano)
+        {
+            try
+            {
+                //Lista de vendas
+                var vendas = new DataAccess.VendaDataAccess().GetList();
+
+                //Filtro
+                var filter = vendas.AsEnumerable().Where(x => (ano == null || x.dtVenda.Year == ano)).ToList();
+
+                //Ranking
+                var ranking = from venda in filter
+                              group venda by venda.nuCNPJ into vendasGroup
+                              select new
+                              {
+                                  cnpj = vendasGroup.Key,
+                                  qtdeVendas = vendasGroup.Count(),
+                                  vendas = vendasGroup
+                              };
+                //Ordenação
+                ranking = ranking.OrderByDescending(x => x.qtdeVendas);
+
+                //Transformo o objeto anônimo em viewmodel
+                var rankingView = new RankingViewModel();
+                decimal vrTotalVendas = 0;
+                var nmCliente = string.Empty;
+
+                foreach (var item in ranking)
+                {
+                    var vendaModelList = new List<VendaModel>();
+
+                    foreach (var itemVenda in item.vendas)
+                    {
+                        var produto = new ProdutoBusiness().Get(itemVenda.idProduto);
+                        if (produto != null)
+                        {
+                            var vrProduto = produto.vrProduto.Split('$')[1];
+                            vrTotalVendas = vrTotalVendas + decimal.Parse(vrProduto);
+                            var vendaModel = new VendaModel(itemVenda.nuCNPJ, itemVenda.dtVenda, itemVenda.idProduto, produto.nmProduto, vrProduto);
+
+                            vendaModelList.Add(vendaModel);
+                        }
+                    }
+
+                    var cliente = await new ClienteBusiness().Get(item.cnpj);
+
+                    nmCliente = cliente.icSucesso ? string.IsNullOrEmpty(cliente.nmCliente) ? cliente.nmFantasia : cliente.nmCliente : "Cliente não localizado";
+                    
+                    var vendaViewModel = new VendaViewModel();
+                    vendaViewModel.Vendas = vendaModelList;
+                    var itemRank = new RankingModel(item.qtdeVendas, vrTotalVendas, nmCliente, vendaViewModel);
+                    rankingView.Ranking.Add(itemRank);
+
                     vrTotalVendas = 0;
                 }
 

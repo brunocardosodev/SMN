@@ -1,6 +1,7 @@
 ﻿using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace DataAccess
@@ -28,10 +29,9 @@ namespace DataAccess
                             if (row != null)
                             {
                                 var text = row.Split(';');
-                                var cnpj = Convert.ToInt64(text[0]);
+                                var cnpj = text[0];
                                 var idProduto = Convert.ToInt32(text[2]);
-                                var dtVenda = DateTime.ParseExact(text[1], "yyyy-MM-dd",
-                                       System.Globalization.CultureInfo.InvariantCulture);
+                                var dtVenda = DateTime.ParseExact(text[1], "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                                 vendas.Add(new Venda(cnpj, dtVenda, idProduto));
                             }

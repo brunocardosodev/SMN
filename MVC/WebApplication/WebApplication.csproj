@@ -166,10 +166,6 @@
     <Compile Include="Migrations\201812281144425_UpdateDataBase.Designer.cs">
       <DependentUpon>201812281144425_UpdateDataBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901011241257_AddImage.cs" />
-    <Compile Include="Migrations\201901011241257_AddImage.Designer.cs">
-      <DependentUpon>201901011241257_AddImage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Tarefa.cs" />
@@ -239,9 +235,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812281144425_UpdateDataBase.resx">
       <DependentUpon>201812281144425_UpdateDataBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901011241257_AddImage.resx">
-      <DependentUpon>201901011241257_AddImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

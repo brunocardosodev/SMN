@@ -53,10 +53,6 @@
     <Compile Include="VendaDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Repository\Produtos.txt" />
-    <Content Include="Repository\Vendas.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -10,7 +10,7 @@ namespace DataAccess
         private static List<Produto> produtos = new List<Produto>();
         public List<Produto> GetList()
         {
-            var path = "D:/SMN/produtos.txt";
+            var path = System.Configuration.ConfigurationSettings.AppSettings["PathProduto"];
 
             if (produtos.Count == 0)
             {

@@ -22,7 +22,7 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idTarefa,nmTarefa,icConcluido")] Tarefa tarefa)
+        public ActionResult Create(Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idTarefa,nmTarefa,icConcluido")] Tarefa tarefa)
+        public ActionResult Edit(Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {

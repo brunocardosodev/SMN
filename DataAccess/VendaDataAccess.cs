@@ -11,7 +11,7 @@ namespace DataAccess
         private static List<Venda> vendas = new List<Venda>();
         public List<Venda> GetList()
         {
-            var path = "D:/SMN/vendas.txt";
+            var path = System.Configuration.ConfigurationSettings.AppSettings["PathVendas"];
 
             if (vendas.Count == 0)
             {

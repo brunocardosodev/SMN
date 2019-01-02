@@ -79,6 +79,8 @@ namespace Business
                 var vendas = new DataAccess.VendaDataAccess().GetList();
                 var filter = vendas.AsEnumerable().Where(x => x.dtVenda >= dtInicial && x.dtVenda <= dtFinal).ToList();
 
+                filter = filter.OrderByDescending(x => x.dtVenda).ToList();
+
                 var result = new VendaViewModel();
 
                 foreach (var item in filter)
@@ -192,7 +194,7 @@ namespace Business
                     var cliente = await new ClienteBusiness().Get(item.cnpj);
 
                     nmCliente = cliente.icSucesso ? string.IsNullOrEmpty(cliente.nmCliente) ? cliente.nmFantasia : cliente.nmCliente : "Cliente não localizado";
-                    
+
                     var vendaViewModel = new VendaViewModel();
                     vendaViewModel.Vendas = vendaModelList;
                     var itemRank = new RankingModel(item.qtdeVendas, vrTotalVendas, nmCliente, vendaViewModel);

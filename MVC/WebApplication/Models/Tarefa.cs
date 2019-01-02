@@ -13,8 +13,6 @@ namespace WebApplication.Models
         [DisplayName("Tarefa")]
         public string nmTarefa { get; set; }
 
-        public string image { get; set; }
-
         [DisplayName("Concluído")]
         public bool icConcluido { get; set; }
     }
